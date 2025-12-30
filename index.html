@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DINO ARCADE ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #2b0000,
+      #2b0000 2px,
+      #3d0000 2px,
+      #3d0000 4px
+    );
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  overflow:hidden;
+}
+
+.arcade{
+  width:92%;
+  max-width:520px;
+  background:#140000;
+  border:6px solid #ff2e63;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:
+    0 0 25px #ff2e63,
+    inset 0 0 20px rgba(255,46,99,.3);
+  text-align:center;
+  position:relative;
+}
+
+h1{
+  font-family:'Press Start 2P',cursive;
+  font-size:16px;
+  color:#ff2e63;
+  margin-bottom:14px;
+  text-shadow:0 0 10px #ff2e63;
+}
+
+p{
+  font-family:'Poppins',sans-serif;
+  font-size:15px;
+  line-height:1.7;
+  margin:12px 0;
+}
+
+button{
+  font-family:'Press Start 2P',cursive;
+  font-size:11px;
+  background:#ff2e63;
+  color:#140000;
+  border:none;
+  padding:12px 18px;
+  margin-top:16px;
+  cursor:pointer;
+  box-shadow:0 0 12px #ff2e63;
+}
+
+button:hover{
+  background:#ff6f91;
+}
+
+.hidden{display:none}
+
+/* choices */
+.choices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
+
+/* letter */
+textarea{
+  width:100%;
+  height:280px;
+  background:#0d0000;
+  color:#ffb3c1;
+  border:3px solid #ff2e63;
+  padding:16px;
+  font-size:14px;
+  line-height:1.8;
+  resize:none;
+  outline:none;
+  font-family:'Poppins',sans-serif;
+}
+
+/* dinos */
+.dino{
+  position:absolute;
+  font-size:24px;
+  opacity:.5;
+  animation:float 14s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(120vh)}
+  to{transform:translateY(-140vh)}
+}
+
+/* popup */
+#popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.7);
+  background:#140000;
+  border:4px solid #ff2e63;
+  padding:24px;
+  box-shadow:0 0 40px #ff2e63;
+  display:none;
+  z-index:5;
+  animation:pop .5s ease forwards;
+}
+
+@keyframes pop{
+  to{transform:translate(-50%,-50%) scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- dinos -->
+<div class="dino" style="left:8%">🦖</div>
+<div class="dino" style="left:30%;animation-delay:4s">🦕</div>
+<div class="dino" style="left:58%;animation-delay:7s">🦖</div>
+<div class="dino" style="left:80%;animation-delay:2s">🦕</div>
+
+<div class="arcade">
+
+<!-- START -->
+<div id="s1">
+  <h1>DINO ARCADE</h1>
+  <p>press start.</p>
+  <button onclick="go(2)">START ▶</button>
+</div>
+
+<!-- LEVEL 1 -->
+<div id="s2" class="hidden">
+  <h1>LEVEL 1</h1>
+  <p>pick your vibe.</p>
+  <div class="choices">
+    <button onclick="react('soft')">SOFT MODE</button>
+    <button onclick="react('chaos')">CHAOS MODE</button>
+  </div>
+  <button onclick="go(3)">NEXT ▶</button>
+</div>
+
+<!-- LEVEL 2 -->
+<div id="s3" class="hidden">
+  <h1>LEVEL 2</h1>
+  <p>what do you do more?</p>
+  <div class="choices">
+    <button onclick="react('notice')">NOTICE DETAILS</button>
+    <button onclick="react('feel')">FEEL DEEPLY</button>
+  </div>
+  <button onclick="go(4)">NEXT ▶</button>
+</div>
+
+<!-- FINAL -->
+<div id="s4" class="hidden">
+  <h1>FINAL LEVEL</h1>
+  <p>reward unlocked.</p>
+  <button onclick="go(5)">OPEN LETTER 💌</button>
+</div>
+
+<!-- LETTER -->
+<div id="s5" class="hidden">
+  <h1>CONFESSION</h1>
+  <textarea id="letter" readonly></textarea>
+</div>
+
+</div>
+
+<!-- popup -->
+<div id="popup">
+  <p style="font-family:'Press Start 2P';font-size:12px;color:#ff2e63">
+    THANK YOU<br><br>
+    FOR PLAYING<br><br>
+    AND FOR READING ❤️
+  </p>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll('.arcade > div')
+    .forEach(d=>d.classList.add('hidden'));
+  document.getElementById('s'+n).classList.remove('hidden');
+
+  if(n===5) typeLetter();
+}
+
+function react(type){
+  if(type==='soft') alert('soft mode selected.');
+  if(type==='chaos') alert('chaos accepted.');
+  if(type==='notice') alert('details matter.');
+  if(type==='feel') alert('feelings detected.');
+}
+
+/* TYPEWRITER */
+const text = `hey.
+my heart’s been trying to tell me something for a while now,
+and i think i finally listened.
+
+i keep thinking about you.
+like… a lot.
+
+and yeah, you’re really cute—
+but it’s more than that.
+
+it’s the way you smile without realizing it.
+the way you talk about the smallest things like they matter.
+the way you’re kind, even when no one’s watching.
+the way your presence feels calm,
+like everything’s okay for a second.
+
+you make me want to be softer.
+braver.
+more honest.
+
+okay.
+here it is—
+
+i like you.
+because you’re you.
+and that’s more than enough.`;
+
+let i=0;
+function typeLetter(){
+  const box=document.getElementById('letter');
+  box.value='';
+  i=0;
+
+  const t=setInterval(()=>{
+    box.value+=text.charAt(i);
+    i++;
+    box.scrollTop=box.scrollHeight;
+
+    if(i>=text.length){
+      clearInterval(t);
+      setTimeout(()=>popup.style.display='block',1200);
+    }
+  },35);
+}
+</script>
+
+</body>
+</html>
